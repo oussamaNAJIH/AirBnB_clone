@@ -5,6 +5,7 @@ This module defines a class BaseModel.
 import uuid
 from datetime import datetime
 
+
 class BaseModel:
     """
     Public instance attributes:
@@ -12,7 +13,7 @@ class BaseModel:
         created_at: the current datetime when an instance is created
         updated_at: the current datetime when an instance is created
         and it will be updated every time you change your object
-    
+
     Public instance methods:
         save
         to_dict
@@ -29,7 +30,7 @@ class BaseModel:
                         setattr(self, key, datetime.fromisoformat(value))
                     else:
                         setattr(self, key, value)
-    
+
     def __str__(self):
         """
         Return: a string representation of the instance.
@@ -44,7 +45,8 @@ class BaseModel:
 
     def to_dict(self):
         """
-        Returns a dictionary containing all keys/values of __dict__ of the instance.
+        Returns a dictionary containing all
+        keys/values of __dict__ of the instance.
         """
         dict_copy = self.__dict__.copy()
         dict_copy['__class__'] = type(self).__name__
