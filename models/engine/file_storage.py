@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """Defines the FileStorage class."""
 import json
@@ -34,8 +33,8 @@ class FileStorage:
         """
         Serializes __objects to the JSON file
         """
-        with open(self.__file_path, 'w') as file:
-            json.dump({k: v.to_dict() for k, v in self.__objects.items()}, file)
+        with open(self.__file_path, 'w') as f:
+            json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
 
     def reload(self):
         """

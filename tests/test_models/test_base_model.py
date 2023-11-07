@@ -8,6 +8,7 @@ from datetime import datetime
 import time
 from models.base_model import BaseModel
 
+
 class TestBaseModelConstructor(unittest.TestCase):
     """
     Unittests for testing the constructor
@@ -18,7 +19,7 @@ class TestBaseModelConstructor(unittest.TestCase):
     def test_initiation_with_args(self):
         obj = BaseModel(id="1234", created_at="2023-07-06T13:15:32.4534")
         self.assertIn("1234", obj.__str__())
-    
+
     def test_type_id(self):
         self.assertEqual(type(BaseModel().id), str)
 
@@ -39,6 +40,7 @@ class TestBaseModelConstructor(unittest.TestCase):
         obj2 = BaseModel()
         self.assertLess(obj1.created_at, obj2.created_at)
 
+
 class TestBaseModelstr(unittest.TestCase):
     """
     Unittests for testing __str__
@@ -49,13 +51,14 @@ class TestBaseModelstr(unittest.TestCase):
         str_rep = obj.__str__()
         expected_str = f"[{type(obj).__name__}] ({id}) {obj.__dict__}"
         self.assertEqual(expected_str, str_rep)
-    
+
 
 class TestBaseModelsave(unittest.TestCase):
     """
     Unittests for testing save method
     """
     pass
+
 
 class TestBaseModelto_dict(unittest.TestCase):
     """
@@ -65,7 +68,7 @@ class TestBaseModelto_dict(unittest.TestCase):
     def test_to_dict_type(self):
         obj = BaseModel()
         self.assertEqual(type(obj.to_dict()), dict)
-    
+
     def test_to_dict_keys(self):
         obj = BaseModel()
         self.assertIn("id", obj.to_dict())
@@ -74,12 +77,12 @@ class TestBaseModelto_dict(unittest.TestCase):
         self.assertIn("__class__", obj.to_dict())
 
     def test_initiation_with_args(self):
-        obj = BaseModel(name = "mike", id="1234", created_at="2023-07-06T13:15:32.45")
+        obj = BaseModel(name="mike", id="1234")
         self.assertIn("id", obj.to_dict())
         self.assertIn("name", obj.to_dict())
 
     def test_to_dict_values(self):
-        obj = BaseModel(name = "mike", id="1234")
+        obj = BaseModel(name="mike", id="1234")
         dict = obj.to_dict()
         self.assertEqual(dict["name"], "mike")
         self.assertEqual(dict["id"], "1234")
@@ -96,7 +99,6 @@ class TestBaseModelto_dict(unittest.TestCase):
             'updated_at': update_time.isoformat()
         }
         self.assertDictEqual(obj.to_dict(), my_dictionnary)
-
 
 
 if __name__ == "__main__":
