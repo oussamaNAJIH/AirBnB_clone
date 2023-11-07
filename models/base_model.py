@@ -4,10 +4,11 @@ This module defines a class BaseModel.
 """
 import uuid
 from datetime import datetime
+from models.__init__ import storage
 
 
 class BaseModel:
-    """
+    """s
     Public instance attributes:
         id: an UUID when an instance is created
         created_at: the current datetime when an instance is created
@@ -19,6 +20,9 @@ class BaseModel:
         to_dict
     """
     def __init__(self, *args, **kwargs):
+        """
+        initiates objects
+        """
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = self.created_at
@@ -30,6 +34,8 @@ class BaseModel:
                         setattr(self, key, datetime.fromisoformat(value))
                     else:
                         setattr(self, key, value)
+        if not kwargs:
+            storage.new(self)
 
     def __str__(self):
         """
