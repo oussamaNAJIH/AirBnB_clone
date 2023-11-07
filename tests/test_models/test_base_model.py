@@ -2,6 +2,7 @@
 """
     Unittest for models/base_model.py
 """
+import models
 import unittest
 import uuid
 from datetime import datetime

@@ -2,9 +2,9 @@
 """
 This module defines a class BaseModel.
 """
+import models
 import uuid
 from datetime import datetime
-from models.__init__ import storage
 
 
 class BaseModel:
@@ -35,7 +35,7 @@ class BaseModel:
                     else:
                         setattr(self, key, value)
         if not kwargs:
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -48,7 +48,7 @@ class BaseModel:
         Updates updated_at with the current datetime.
         """
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """
