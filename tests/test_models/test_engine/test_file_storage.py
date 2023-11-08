@@ -31,16 +31,52 @@ class Test_all_method(unittest.TestCase):
         result = self.storage.all()
         self.assertEqual(dict, type(result))
 
+    def test_all_with_arguments(self):
+        storage = FileStorage()
+        with self.assertRaises(TypeError):
+            storage.all("arg1", "arg2")
+
+
 class Test_new_method(unittest.TestCase):
-    pass
+    def test_new_method(self):
+        storage = FileStorage()
+        base_model = BaseModel()
+        storage.new(base_model)
+        objects = storage.all()
+        key = f"{base_model.__class__.__name__}.{base_model.id}"
+        self.assertIn(key, objects)
+        self.assertEqual(objects[key], base_model)
+
+    def test_new_with_invalid_object(self):
+        storage = FileStorage()
+        with self.assertRaises(AttributeError):
+            storage.new("invalid_object")
 
 
 class Test_save_method(unittest.TestCase):
-    pass
+    def test_save_method(self):
+        storage = FileStorage()
+        base_model = BaseModel()
+        storage.new(base_model)
+        storage.save()
+    
+    def test_save_with_arguments(self):
+        storage = FileStorage()
+        with self.assertRaises(TypeError):
+            storage.save("arg1", "arg2")
 
 
 class Test_reload_method(unittest.TestCase):
-    pass
+    def test_reload_method(self):
+        storage = FileStorage()
+        base_model = BaseModel()
+        storage.new(base_model)
+        storage.save()
+
+    def test_reload_with_arguments(self):
+        storage = FileStorage()
+        with self.assertRaises(TypeError):
+            storage.reload("arg1", "arg2")
 
 
 if __name__ == "__main__":

@@ -41,11 +41,24 @@ class TestBaseModelConstructor(unittest.TestCase):
         obj2 = BaseModel()
         self.assertLess(obj1.created_at, obj2.created_at)
 
+    def test_invalid_created_at(self):
+        with self.assertRaises(ValueError):
+            BaseModel(created_at="invalid_datetime_format")
+
+    def test_invalid_updated_at(self):
+        with self.assertRaises(ValueError):
+            BaseModel(updated_at="invalid_datetime_format")
+    
 
 class TestBaseModelstr(unittest.TestCase):
     """
     Unittests for testing __str__
     """
+    def test_str_with_arguments(self):
+        obj = BaseModel()
+        with self.assertRaises(TypeError):
+            obj.__str__("arg1", "arg2")
+
     def test_str_method(self):
         obj = BaseModel()
         id = obj.id
@@ -58,13 +71,33 @@ class TestBaseModelsave(unittest.TestCase):
     """
     Unittests for testing save method
     """
-    pass
+    def test_save_with_arguments(self):
+        obj = BaseModel()
+        with self.assertRaises(TypeError):
+            obj.save("arg1", "arg2")
+
+    def test_save_method_updates_updated_at(self):
+        obj = BaseModel()
+        initial_updated_at = obj.updated_at
+        time.sleep(1)
+        obj.save()
+        self.assertNotEqual(initial_updated_at, obj.updated_at)
+
+    def test_save_not_update(self):
+        obj = BaseModel()
+        initial_updated_at = obj.updated_at
+        obj.save()
+        self.assertEqual(initial_updated_at, obj.updated_at)
 
 
 class TestBaseModelto_dict(unittest.TestCase):
     """
     Unittests for testing to_dict
     """
+    def test_to_dict_with_arguments(self):
+        obj = BaseModel()
+        with self.assertRaises(TypeError):
+            obj.to_dict("arg1", "arg2")
 
     def test_to_dict_type(self):
         obj = BaseModel()
