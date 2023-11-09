@@ -105,35 +105,41 @@ Prints all string representation of all instances
 
     def do_update(self, arg):
         """
-Updates an instance based on the class name and id
+Update a class instance based on the given arguments.
         """
-        instances = models.storage.all()
         argl = arg.split()
+        objdict = models.storage.all()
 
         if len(argl) == 0:
             print("** class name missing **")
-        elif len(argl) == 1:
-            if argl[0] not in globals():
-                print("** class doesn't exist **")
-            else:
-                print("** instance id missing **")
-        elif len(argl) == 2 and argl[0] in globals():
-            key = "{}.{}".format(argl[0], argl[1])
-            instance = instances.get(key)
-            if not instance:
-                print("** no instance found **")
-            else:
-                print("** attribute name missing **")
-        elif len(argl) == 3:
+            return False
+        if argl[0] not in globals():
+            print("** class doesn't exist **")
+            return False
+        if len(argl) == 1:
+            print("** instance id missing **")
+            return False
+        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+            print("** no instance found **")
+            return False
+        if len(argl) == 2:
+            print("** attribute name missing **")
+            return False
+        if len(argl) == 3:
             print("** value missing **")
+            return False
+
+        obj = objdict["{}.{}".format(argl[0], argl[1])]
+        attribute = argl[2]
+        value = argl[3]
+
+        if hasattr(obj, attribute):
+            attr_type = type(getattr(obj, attribute))
+            setattr(obj, attribute, attr_type(value))
+            models.storage.save()
         else:
-            key = "{}.{}".format(argl[0], argl[1])
-            instance = instances.get(key)
-            attribute = argl[2]
-            if hasattr(instance, attribute):
-                value = argl[3]
-                setattr(instance, attribute, value)
-                models.storage.save()
+            setattr(obj, attribute, value)
+            models.storage.save()
 
 
 if __name__ == '__main__':
