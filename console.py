@@ -90,5 +90,22 @@ Quit command to exit the program
                 print("** no instance found **")
 
 
+    def do_all(self, arg):
+        if arg:
+            argl = arg.split()
+            if argl[0] not in globals():
+                print("** class doesn't exist **")
+            else:
+                filtered_instances = []
+                instances = models.storage.all().values()
+                for obj in instances:
+                    if obj.__class__.__name__ == argl[0]:
+                        filtered_instances.append(obj.__str__())
+                print(filtered_instances)
+        else:
+            instances = models.storage.all().values()
+            print([obj.__str__() for obj in instances])
+
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
