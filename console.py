@@ -50,37 +50,34 @@ Prints the string representation of an instance
 
         if len(argl) == 0:
             print("** class name missing **")
-        elif argl[0] not in globals():
+        elif len(argl) == 1 and argl[0] not in globals():
             print("** class doesn't exist **")
-        elif len(argl) == 1:
+        elif len(argl) == 1 and argl[0] in globals():
             print("** instance id missing **")
-        else:
+        elif len(argl) == 2 and argl[0] in globals():
             key = "{}.{}".format(argl[0], argl[1])
             instances = models.storage.all()
             instance = instances.get(key)
-
             if instance:
                 print(instance)
             else:
                 print("** no instance found **")
-
+        """to checkk"""
     def do_destroy(self, arg):
         """
 Deletes an instance based on the class name and id
         """
         argl = arg.split()
-
         if len(argl) == 0:
             print("** class name missing **")
-        elif argl[0] not in globals():
+        elif len(argl) == 1 and argl[0] not in globals():
             print("** class doesn't exist **")
-        elif len(argl) == 1:
+        elif len(argl) == 1 and argl[0] in globals():
             print("** instance id missing **")
-        else:
+        elif len(argl) == 2 and argl[0] in globals():
             key = "{}.{}".format(argl[0], argl[1])
             instances = models.storage.all()
             instance = instances.get(key)
-
             if instance:
                 del instances[key]
                 models.storage.save()
