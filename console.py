@@ -7,6 +7,7 @@ import models
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
+
 class HBNBCommand(cmd.Cmd):
     """
     HBNBCommand class inherits from Cmd class
@@ -24,7 +25,7 @@ Quit command to exit the program
 Quit command to exit the program
         """
         return True
-    
+
     def do_create(self, arg):
         """
         Creates a new instance of BaseModel
@@ -39,19 +40,19 @@ Quit command to exit the program
                 models.storage.new(obj)
                 models.storage.save()
                 print(obj.id)
-            except:
+            except KeyError:
                 print("** class doesn't exist **")
-
 
     def do_show(self, arg):
         """Usage: show <class> <id>
-        Prints the string representation of an instance based on the class name and id.
+        Prints the string representation of an instance
+        based on the class name and id.
         """
         argl = arg.split()
 
         if len(argl) == 0:
             print("** class name missing **")
-        elif argl[0] not in globals() or not isinstance(globals()[argl[0]], type):
+        elif argl[0] not in globals():
             print("** class doesn't exist **")
         elif len(argl) == 1:
             print("** instance id missing **")
@@ -73,7 +74,7 @@ Quit command to exit the program
 
         if len(argl) == 0:
             print("** class name missing **")
-        elif argl[0] not in globals() or not isinstance(globals()[argl[0]], type):
+        elif argl[0] not in globals():
             print("** class doesn't exist **")
         elif len(argl) == 1:
             print("** instance id missing **")
