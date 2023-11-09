@@ -62,7 +62,7 @@ Prints the string representation of an instance
                 print(instance)
             else:
                 print("** no instance found **")
-        """to checkk"""
+
     def do_destroy(self, arg):
         """
 Deletes an instance based on the class name and id
@@ -90,9 +90,9 @@ Prints all string representation of all instances
         """
         if arg:
             argl = arg.split()
-            if argl[0] not in globals():
+            if len(argl) == 1 and argl[0] not in globals():
                 print("** class doesn't exist **")
-            else:
+            elif len(argl) == 1 and argl[0] in globals():
                 filtered_instances = []
                 instances = models.storage.all().values()
                 for obj in instances:
