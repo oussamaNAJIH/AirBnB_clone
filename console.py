@@ -85,7 +85,7 @@ Quit command to exit the program
 
             if instance:
                 del instances[key]
-                models.storage.save()  # Save changes to the JSON file
+                models.storage.save()
             else:
                 print("** no instance found **")
 
