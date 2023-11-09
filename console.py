@@ -28,8 +28,7 @@ Quit command to exit the program
 
     def do_create(self, arg):
         """
-        Creates a new instance of BaseModel
-        saves it (to the JSON file) and prints the id
+Creates a new instance and prints the id
         """
         if not arg:
             print("** class name missing **")
@@ -44,9 +43,8 @@ Quit command to exit the program
                 print("** class doesn't exist **")
 
     def do_show(self, arg):
-        """Usage: show <class> <id>
-        Prints the string representation of an instance
-        based on the class name and id.
+        """
+Prints the string representation of an instance
         """
         argl = arg.split()
 
@@ -68,7 +66,7 @@ Quit command to exit the program
 
     def do_destroy(self, arg):
         """
-        Deletes an instance based on the class name and id
+Deletes an instance based on the class name and id
         """
         argl = arg.split()
 
@@ -89,8 +87,10 @@ Quit command to exit the program
             else:
                 print("** no instance found **")
 
-
     def do_all(self, arg):
+        """
+Prints all string representation of all instances
+        """
         if arg:
             argl = arg.split()
             if argl[0] not in globals():
@@ -105,6 +105,38 @@ Quit command to exit the program
         else:
             instances = models.storage.all().values()
             print([obj.__str__() for obj in instances])
+
+    def do_update(self, arg):
+        """
+Updates an instance based on the class name and id
+        """
+        instances = models.storage.all()
+        argl = arg.split()
+
+        if len(argl) == 0:
+            print("** class name missing **")
+        elif len(argl) == 1:
+            if argl[0] not in globals():
+                print("** class doesn't exist **")
+            else:
+                print("** instance id missing **")
+        elif len(argl) == 2 and argl[0] in globals():
+            key = "{}.{}".format(argl[0], argl[1])
+            instance = instances.get(key)
+            if not instance:
+                print("** no instance found **")
+            else:
+                print("** attribute name missing **")
+        elif len(argl) == 3:
+            print("** value missing **")
+        else:
+            key = "{}.{}".format(argl[0], argl[1])
+            instance = instances.get(key)
+            attribute = argl[2]
+            if hasattr(instance, attribute):
+                value = argl[3]
+                setattr(instance, attribute, value)
+                models.storage.save()
 
 
 if __name__ == '__main__':
