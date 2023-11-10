@@ -8,6 +8,7 @@ import time
 from datetime import datetime
 from models.city import City
 
+
 class TestCityConstructor(unittest.TestCase):
     """
     Unittests for testing the constructor
@@ -55,6 +56,7 @@ class TestCityConstructor(unittest.TestCase):
         with self.assertRaises(ValueError):
             City(updated_at="invalid_datetime_format")
 
+
 class TestCityStr(unittest.TestCase):
     """
     Unittests for testing __str__
@@ -63,6 +65,7 @@ class TestCityStr(unittest.TestCase):
         obj = City()
         with self.assertRaises(TypeError):
             obj.__str__("arg1", "arg2")
+
 
 class TestCitySave(unittest.TestCase):
     """
@@ -85,6 +88,7 @@ class TestCitySave(unittest.TestCase):
         initial_updated_at = obj.updated_at
         obj.save()
         self.assertEqual(initial_updated_at, obj.updated_at)
+
 
 class TestCityToDict(unittest.TestCase):
     """
@@ -137,6 +141,7 @@ class TestCityToDict(unittest.TestCase):
         }
 
         self.assertDictEqual(obj.to_dict(), my_dictionary)
+
 
 if __name__ == "__main__":
     unittest.main()

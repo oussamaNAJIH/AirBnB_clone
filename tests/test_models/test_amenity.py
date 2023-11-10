@@ -8,6 +8,7 @@ import time
 from datetime import datetime
 from models.amenity import Amenity
 
+
 class TestAmenityConstructor(unittest.TestCase):
     """
     Unittests for testing the constructor
@@ -51,6 +52,7 @@ class TestAmenityConstructor(unittest.TestCase):
         with self.assertRaises(ValueError):
             Amenity(updated_at="invalid_datetime_format")
 
+
 class TestAmenityStr(unittest.TestCase):
     """
     Unittests for testing __str__
@@ -59,6 +61,7 @@ class TestAmenityStr(unittest.TestCase):
         obj = Amenity()
         with self.assertRaises(TypeError):
             obj.__str__("arg1", "arg2")
+
 
 class TestAmenitySave(unittest.TestCase):
     """
@@ -81,6 +84,7 @@ class TestAmenitySave(unittest.TestCase):
         initial_updated_at = obj.updated_at
         obj.save()
         self.assertEqual(initial_updated_at, obj.updated_at)
+
 
 class TestAmenityToDict(unittest.TestCase):
     """
@@ -130,6 +134,7 @@ class TestAmenityToDict(unittest.TestCase):
         }
 
         self.assertDictEqual(obj.to_dict(), my_dictionary)
+
 
 if __name__ == "__main__":
     unittest.main()

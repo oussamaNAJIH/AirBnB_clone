@@ -48,7 +48,7 @@ class TestBaseModelConstructor(unittest.TestCase):
     def test_invalid_updated_at(self):
         with self.assertRaises(ValueError):
             BaseModel(updated_at="invalid_datetime_format")
-    
+
 
 class TestBaseModelstr(unittest.TestCase):
     """

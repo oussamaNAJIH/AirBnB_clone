@@ -142,7 +142,7 @@ class TestUserToDict(unittest.TestCase):
         created_time = obj.created_at
         update_time = obj.updated_at
         obj.id = "1234"
-        
+
         user_dictionary = {
             'id': '1234',
             '__class__': 'User',
@@ -155,7 +155,6 @@ class TestUserToDict(unittest.TestCase):
         }
 
         self.assertDictEqual(obj.to_dict(), user_dictionary)
-
 
 
 if __name__ == "__main__":

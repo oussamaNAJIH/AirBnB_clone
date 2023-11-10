@@ -18,7 +18,7 @@ class TestFileStorageConstructor(unittest.TestCase):
 
     def test_file_path_attribute(self):
         self.assertEqual(str, type(FileStorage._FileStorage__file_path))
-    
+
     def test_objects_attribute(self):
         self.assertEqual(dict, type(FileStorage._FileStorage__objects))
 
@@ -59,7 +59,7 @@ class Test_save_method(unittest.TestCase):
         base_model = BaseModel()
         storage.new(base_model)
         storage.save()
-    
+
     def test_save_with_arguments(self):
         storage = FileStorage()
         with self.assertRaises(TypeError):

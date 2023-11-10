@@ -8,6 +8,7 @@ import time
 from datetime import datetime
 from models.review import Review
 
+
 class TestReviewConstructor(unittest.TestCase):
     """
     Unittests for testing the constructor
@@ -71,6 +72,7 @@ class TestReviewConstructor(unittest.TestCase):
         obj = Review()
         self.assertEqual(obj.text, "")
 
+
 class TestReviewStr(unittest.TestCase):
     """
     Unittests for testing __str__
@@ -79,6 +81,7 @@ class TestReviewStr(unittest.TestCase):
         obj = Review()
         with self.assertRaises(TypeError):
             obj.__str__("arg1", "arg2")
+
 
 class TestReviewSave(unittest.TestCase):
     """
@@ -101,6 +104,7 @@ class TestReviewSave(unittest.TestCase):
         initial_updated_at = obj.updated_at
         obj.save()
         self.assertEqual(initial_updated_at, obj.updated_at)
+
 
 class TestReviewToDict(unittest.TestCase):
     """
@@ -156,6 +160,7 @@ class TestReviewToDict(unittest.TestCase):
         }
 
         self.assertDictEqual(obj.to_dict(), my_dictionary)
+
 
 if __name__ == "__main__":
     unittest.main()

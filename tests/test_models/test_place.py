@@ -8,6 +8,7 @@ import time
 from datetime import datetime
 from models.place import Place
 
+
 class TestPlaceConstructor(unittest.TestCase):
     """
     Unittests for testing the constructor
@@ -58,7 +59,7 @@ class TestPlaceConstructor(unittest.TestCase):
     def test_amenity_ids_default(self):
         obj = Place()
         self.assertEqual(obj.amenity_ids, [])
-    
+
     def test_initiation_with_args(self):
         obj = Place(id="1234", created_at="2023-07-06T13:15:32.4534")
         self.assertIn("1234", obj.__str__())
@@ -91,6 +92,7 @@ class TestPlaceConstructor(unittest.TestCase):
         with self.assertRaises(ValueError):
             Place(updated_at="invalid_datetime_format")
 
+
 class TestPlaceStr(unittest.TestCase):
     """
     Unittests for testing __str__
@@ -122,6 +124,7 @@ class TestPlaceSave(unittest.TestCase):
         initial_updated_at = obj.updated_at
         obj.save()
         self.assertEqual(initial_updated_at, obj.updated_at)
+
 
 class TestPlaceToDict(unittest.TestCase):
     """
@@ -190,6 +193,7 @@ class TestPlaceToDict(unittest.TestCase):
         }
 
         self.assertDictEqual(obj.to_dict(), my_dictionary)
+
 
 if __name__ == "__main__":
     unittest.main()
