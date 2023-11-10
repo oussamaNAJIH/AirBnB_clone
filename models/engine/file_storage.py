@@ -64,9 +64,8 @@ class FileStorage:
                         self.__objects[key] = Amenity(**value)
                     elif cls_name == "Review":
                         self.__objects[key] = Review(**value)
-                    else:
-                        class_type = globals()[cls_name]
-                        self.__objects[key] = class_type(**value)
+                    elif cls_name == "BaseModel":
+                        self.__objects[key] = BaseModel(**value)
         except FileNotFoundError:
             pass
 
