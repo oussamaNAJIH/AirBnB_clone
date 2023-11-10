@@ -32,15 +32,13 @@ Creates a new instance and prints the id
         """
         if not arg:
             print("** class name missing **")
+        elif arg == "BaseModel":
+            obj = BaseModel()
+            models.storage.new(obj)
+            models.storage.save()
+            print(obj.id)
         else:
-            try:
-                cls = globals()[arg]
-                obj = cls()
-                models.storage.new(obj)
-                models.storage.save()
-                print(obj.id)
-            except KeyError:
-                print("** class doesn't exist **")
+            print("** class doesn't exist **")
 
     def do_show(self, arg):
         """
