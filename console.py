@@ -154,6 +154,14 @@ class HBNBCommand(cmd.Cmd):
             class_name = parts[0]
             all_instances = [str(obj) for obj in models.storage.all().values() if obj.__class__.__name__ == class_name]
             print(all_instances)
+        elif len(parts) == 2 and parts[0] in self.__classes and parts[1] == "count()":
+            count = 0
+            class_name = parts[0]
+            for obj in models.storage.all().values():
+                if obj.__class__.__name__ == class_name:
+                    count+=1
+            print(count)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
