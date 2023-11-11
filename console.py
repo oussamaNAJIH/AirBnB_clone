@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """
-this module contains the entry point of the command interpreter
+This module contains the entry point of the command interpreter
 """
 import cmd
 import models
 from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -13,6 +13,15 @@ class HBNBCommand(cmd.Cmd):
     HBNBCommand class inherits from Cmd class
     """
     prompt = "(hbnb) "
+    __classes = {
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Amenity",
+        "Review"
+    }
 
     def do_quit(self, arg):
         """
@@ -33,13 +42,13 @@ class HBNBCommand(cmd.Cmd):
         """
         if not arg:
             print("** class name missing **")
-        elif arg == "BaseModel":
-            obj = BaseModel()
+        elif arg not in self.__classes:
+            print("** class doesn't exist **")
+        else:
+            obj = globals()[arg]()
             models.storage.new(obj)
             models.storage.save()
             print(obj.id)
-        else:
-            print("** class doesn't exist **")
 
     def do_show(self, arg):
         """
@@ -49,18 +58,16 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argl) == 0:
             print("** class name missing **")
-        elif len(argl) == 1 and argl[0] not in globals():
+        elif argl[0] not in self.__classes:
             print("** class doesn't exist **")
-        elif len(argl) == 1 and argl[0] in globals():
+        elif len(argl) == 1:
             print("** instance id missing **")
-        elif len(argl) == 2 and argl[0] in globals():
+        elif "{}.{}".format(argl[0], argl[1]) not in models.storage.all():
+            print("** no instance found **")
+        else:
             key = "{}.{}".format(argl[0], argl[1])
-            instances = models.storage.all()
-            instance = instances.get(key)
-            if instance:
-                print(instance)
-            else:
-                print("** no instance found **")
+            instance = models.storage.all()[key]
+            print(instance)
 
     def do_destroy(self, arg):
         """
@@ -69,38 +76,30 @@ class HBNBCommand(cmd.Cmd):
         argl = arg.split()
         if len(argl) == 0:
             print("** class name missing **")
-        elif len(argl) == 1 and argl[0] not in globals():
+        elif argl[0] not in self.__classes:
             print("** class doesn't exist **")
-        elif len(argl) == 1 and argl[0] in globals():
+        elif len(argl) == 1:
             print("** instance id missing **")
-        elif len(argl) == 2 and argl[0] in globals():
+        elif "{}.{}".format(argl[0], argl[1]) not in models.storage.all():
+            print("** no instance found **")
+        else:
             key = "{}.{}".format(argl[0], argl[1])
-            instances = models.storage.all()
-            instance = instances.get(key)
-            if instance:
-                del instances[key]
-                models.storage.save()
-            else:
-                print("** no instance found **")
+            del models.storage.all()[key]
+            models.storage.save()
 
     def do_all(self, arg):
         """
         Prints all string representation of all instances
         """
-        if arg:
-            argl = arg.split()
-            if len(argl) == 1 and argl[0] not in globals():
-                print("** class doesn't exist **")
-            elif len(argl) == 1 and argl[0] in globals():
-                filtered_instances = []
-                instances = models.storage.all().values()
-                for obj in instances:
-                    if obj.__class__.__name__ == argl[0]:
-                        filtered_instances.append(obj.__str__())
-                print(filtered_instances)
+        if arg and arg not in self.__classes:
+            print("** class doesn't exist **")
         else:
             instances = models.storage.all().values()
-            print([obj.__str__() for obj in instances])
+            if arg:
+                filtered_instances = [obj.__str__() for obj in instances if obj.__class__.__name__ == arg]
+                print(filtered_instances)
+            else:
+                print([obj.__str__() for obj in instances])
 
     def do_update(self, arg):
         """
@@ -111,34 +110,29 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argl) == 0:
             print("** class name missing **")
-            return False
-        if argl[0] not in globals():
+        elif argl[0] not in self.__classes:
             print("** class doesn't exist **")
-            return False
-        if len(argl) == 1:
+        elif len(argl) == 1:
             print("** instance id missing **")
-            return False
-        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+        elif "{}.{}".format(argl[0], argl[1]) not in objdict:
             print("** no instance found **")
-            return False
-        if len(argl) == 2:
+        elif len(argl) == 2:
             print("** attribute name missing **")
-            return False
-        if len(argl) == 3:
+        elif len(argl) == 3:
             print("** value missing **")
-            return False
-
-        obj = objdict["{}.{}".format(argl[0], argl[1])]
-        attribute = argl[2]
-        value = argl[3]
-
-        if hasattr(obj, attribute):
-            attr_type = type(getattr(obj, attribute))
-            setattr(obj, attribute, attr_type(value))
-            models.storage.save()
         else:
-            setattr(obj, attribute, value)
-            models.storage.save()
+            key = "{}.{}".format(argl[0], argl[1])
+            obj = objdict[key]
+            attribute = argl[2]
+            value = argl[3]
+
+            if hasattr(obj, attribute):
+                attr_type = type(getattr(obj, attribute))
+                setattr(obj, attribute, attr_type(value))
+                models.storage.save()
+            else:
+                setattr(obj, attribute, value)
+                models.storage.save()
 
     def emptyline(self):
         """
