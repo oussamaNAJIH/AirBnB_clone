@@ -4,6 +4,7 @@ This module contains the entry point of the command interpreter
 """
 import cmd
 import models
+from datetime import datetime
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -187,7 +188,8 @@ class HBNBCommand(cmd.Cmd):
                         setattr(obj, attribute, type(getattr(obj, attribute))(value))
                         models.storage.save()
                     else:
-                        print("** no attribute found **")
+                        setattr(obj, attribute, value)
+                        models.storage.save()
                 else:
                     print("** no instance found **")
             else:
