@@ -177,16 +177,21 @@ class HBNBCommand(cmd.Cmd):
                 models.storage.save()
 
         elif len(parts) == 2 and parts[0] in self.__classes and parts[1].split('(')[0] == "update":
-                params = parts[1].split('(')[1].split(')')[0].split(',')
-                if len(params) == 3:
-                    class_name, obj_id, attribute, value = parts[0], params[0].strip(), params[1].strip(), params[2].strip()
-                    key = "{}.{}".format(class_name, obj_id)
-                    obj = models.storage.all().get(key)
-                    if obj:
+            params = parts[1].split('(')[1].split(')')[0].split(',')
+            if len(params) == 3:
+                class_name, obj_id, attribute, value = parts[0], params[0].strip(), params[1].strip(), params[2].strip()
+                key = "{}.{}".format(class_name, obj_id)
+                obj = models.storage.all().get(key)
+                if obj:
+                    if hasattr(obj, attribute):
                         setattr(obj, attribute, type(getattr(obj, attribute))(value))
                         models.storage.save()
                     else:
-                        print("** no instance found **")
+                        print("** no attribute found **")
+                else:
+                    print("** no instance found **")
+            else:
+                print("** invalid number of arguments for update command **")
 
 
 if __name__ == '__main__':
