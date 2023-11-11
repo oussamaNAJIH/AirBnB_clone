@@ -22,8 +22,12 @@ class FileStorage:
         save(self)
         reload(self)
     """
-    __file_path = "file.json"
-    __objects = {}
+    def __init__(self):
+        """
+        initiates objects
+        """
+        self.__file_path = "file.json"
+        self.__objects = {}
 
     def all(self):
         """ Returns the dictionary __objects """
