@@ -96,10 +96,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             instances = models.storage.all().values()
             if arg:
-                filtered_instances = []
-                for obj in instances:
-                    if obj.__class__.__name__ == arg
-                filtered_instances.append(obj.__str__())
+                filtered_instances = [obj.__str__() for obj in instances if obj.__class__.__name__ == arg]
                 print(filtered_instances)
             else:
                 print([obj.__str__() for obj in instances])
