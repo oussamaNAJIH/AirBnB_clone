@@ -145,6 +145,15 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
+    def default(self, line):
+        """
+        Called on an input line when the command prefix is not recognized.
+        """
+        parts = line.split('.')
+        if len(parts) == 2 and parts[0] in self.__classes and parts[1] == "all()":
+            class_name = parts[0]
+            all_instances = [str(obj) for obj in models.storage.all().values() if obj.__class__.__name__ == class_name]
+            print(all_instances)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
