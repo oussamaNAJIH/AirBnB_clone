@@ -162,7 +162,9 @@ class HBNBCommand(cmd.Cmd):
                     count+=1
             print(count)
         elif len(parts) == 2 and parts[0] in self.__classes and isinstance(parts[1], str):
-            if "{}.{}".format(parts[0], parts[1][6:-2]) in models.storage.all():
+            if "{}.{}".format(parts[0], parts[1][6:-2]) not in models.storage.all():
+                print("** no instance found **")
+            else:
                 key = "{}.{}".format(parts[0], parts[1][6:-2])
                 instance = models.storage.all()[key]
                 print(instance)
