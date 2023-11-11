@@ -161,6 +161,11 @@ class HBNBCommand(cmd.Cmd):
                 if obj.__class__.__name__ == class_name:
                     count+=1
             print(count)
+        elif len(parts) == 2 and parts[0] in self.__classes and isinstance(parts[1], str):
+            if "{}.{}".format(parts[0], parts[1][6:-2]) in models.storage.all():
+                key = "{}.{}".format(parts[0], parts[1][6:-2])
+                instance = models.storage.all()[key]
+                print(instance)
 
 
 if __name__ == '__main__':
