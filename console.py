@@ -16,19 +16,19 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, arg):
         """
-Quit command to exit the program
+        Quit command to exit the program
         """
         return True
 
     def do_EOF(self, arg):
         """
-Quit command to exit the program
+        Quit command to exit the program
         """
         return True
 
     def do_create(self, arg):
         """
-Creates a new instance and prints the id
+        Creates a new instance and prints the id
         """
         if not arg:
             print("** class name missing **")
@@ -42,7 +42,7 @@ Creates a new instance and prints the id
 
     def do_show(self, arg):
         """
-Prints the string representation of an instance
+        Prints the string representation of an instance
         """
         argl = arg.split()
 
@@ -63,7 +63,7 @@ Prints the string representation of an instance
 
     def do_destroy(self, arg):
         """
-Deletes an instance based on the class name and id
+        Deletes an instance based on the class name and id
         """
         argl = arg.split()
         if len(argl) == 0:
@@ -84,7 +84,7 @@ Deletes an instance based on the class name and id
 
     def do_all(self, arg):
         """
-Prints all string representation of all instances
+        Prints all string representation of all instances
         """
         if arg:
             argl = arg.split()
@@ -103,7 +103,7 @@ Prints all string representation of all instances
 
     def do_update(self, arg):
         """
-Update a class instance based on the given arguments.
+        Update a class instance based on the given arguments.
         """
         argl = arg.split()
         objdict = models.storage.all()
@@ -138,6 +138,12 @@ Update a class instance based on the given arguments.
         else:
             setattr(obj, attribute, value)
             models.storage.save()
+
+    def emptyline(self):
+        """
+        Called when an empty line is entered. Override to do nothing.
+        """
+        pass
 
 
 if __name__ == '__main__':
