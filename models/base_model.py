@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This module defines a class BaseModel.
+ This module defines a class BaseModel.
 """
 import models
 import uuid
