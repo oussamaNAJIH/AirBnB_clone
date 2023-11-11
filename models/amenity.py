@@ -11,9 +11,4 @@ class Amenity(BaseModel):
     Public class attributes:
         name: string - empty string
     """
-    def __init__(self, *args, **kwargs):
-        """
-        method that initiates new object
-        """
-        super().__init__(*args, **kwargs)
-        self.name = ""
+    name = ""
