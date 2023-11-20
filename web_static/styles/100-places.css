@@ -111,3 +111,19 @@
     background-repeat: no-repeat;
     margin-right: 10px;
 }
+.reviews {
+    margin-top: 40px;
+}
+.reviews h2 {
+    font-size: 16px;
+    border-bottom: solid #DDDDDD 1px;
+}
+.reviews ul {
+    list-style: none;
+}
+.reviews h3 {
+    font-size: 14px;
+}
+.reviews p {
+    font-size: 12px;
+}
