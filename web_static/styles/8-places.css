@@ -13,6 +13,7 @@
     margin: 20px;
     border: #FF5A5F 1px ridge;
     border-radius: 4px;
+    position: relative;
 }
 
 .places article h2 {
@@ -35,9 +36,7 @@
     right: 20px;
     top: 20px;
 }
-article {
-    position: relative;
-}
+
 
 .information {
     height: 80px;
@@ -59,4 +58,10 @@ article {
 .number_bathrooms {
     width: 100px;
     background: url("../images/icon_bath.png") no-repeat;
+}
+.information p {
+    margin-top: 50px;
+}
+.user {
+    margin-top: 30px;
 }
